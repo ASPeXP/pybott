@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-def analyze_covid_from_user(username, current_date_data):
+def analyze_covid_from_user(current_date_data):
 
 
         today = date.today()
@@ -8,30 +8,25 @@ def analyze_covid_from_user(username, current_date_data):
         #print(now)
 
         _input_current_date = str(today) + ' ' + str(now)
-        print(_input_current_date)
+        # print(_input_current_date)
     
         print("สรุปจากผลการตรวจสอบอาการเบื้องต้น พบว่า")
         score = 0
 
-        if current_date_data["has_fever"] == "y":
-            score += 20
+        score += int(current_date_data["has_fever"]) * 4
 
-        if current_date_data["has_cough"] == "y":
-            score += 20
+        score += int(current_date_data["has_cough"]) * 4
 
-        if current_date_data["has_sore_throat"] == "y":
-            score += 20
+        score += int(current_date_data["has_sore_throat"] ) * 4
 
-        if current_date_data["has_mucus"] == "y":
-            score += 20
+        score += int( current_date_data["has_mucus"] ) * 4
 
-        if current_date_data["has_disp"] == "y":
-            score += 20
+        score += int(current_date_data["has_disp"] ) * 4
 
         current_date_data["score"] = score 
         current_date_data["check_date"] = _input_current_date
 
-        print("คุณ " + username)
+        # print("คุณ " + username)
         if 60 <= score < 100 :
             current_date_data["suggestion"] ="ควรกักตัวอยู่ที่บ้านนะคะ"
             print("ควรกักตัวอยู่ที่บ้านนะคะ")

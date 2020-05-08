@@ -1,21 +1,23 @@
 #coding: utf-8
 from BasicFunction.COVID_ANALYZER import analyze_covid_from_user 
 from firebase import firebase
-from BasicFunction.firebase_db_connect import get, post, update, delete 
+from BasicFunction.firebase_db_connect import get, post_daily_tracking, update, delete 
 from config import Firebase_DB_url
 #Firebase_DB_url = "https://pybott-6th-c90ed.firebaseio.com/" # Your firebase Application
 firebase = firebase.FirebaseApplication(Firebase_DB_url, None)
 DB_NAME = "COVID-19-Tracker"
 
-while not input("Press x to Exit : ") == "x":
-    print("ยินดีต้อนรับเข้าสู่บริการตรวจคัดกรองไวรัส Covid19 \n คุณควรจะกักตัวหรือไม่")
-    _input_name = input("กรุณากรอกชื่อของท่าน : ")
-    print("สวัสดีคุณ : " + _input_name)
-    _input_has_fever = input("คุณ " + _input_name + " มีไข้สูงกว่า 37.5 องศา หรือไม่? (y/n) : ")
-    _input_has_cought = input("ตุณ " + _input_name + " มีอาการไอหรือไม่ (y/n) : ")
-    _input_has_throat_pain = input("คุณ " + _input_name + " มีอาการเจ็บคอหรือไม่ (y/n) : " )
-    _input_has_mucus = input("คุณ " + _input_name + " มีอาการน้ำมูกไหลหรือไม่ (y/n) : ")
-    _input_has_gasp = input("คุณ " + _input_name + " มีอาการเหนือ่ยหอบหรือไม่ (y/n) : ")
+# while not input("Press x to Exit : ") == "x":
+#     print("ยินดีต้อนรับเข้าสู่บริการตรวจคัดกรองไวรัส Covid19 \n คุณควรจะกักตัวหรือไม่")
+#     _input_name = input("กรุณากรอกชื่อของท่าน : ")
+#     print("สวัสดีคุณ : " + _input_name)
+#     _input_has_fever = input("คุณ " + _input_name + " มีไข้สูงกว่า 37.5 องศา หรือไม่? (y/n) : ")
+#     _input_has_cought = input("ตุณ " + _input_name + " มีอาการไอหรือไม่ (y/n) : ")
+#     _input_has_throat_pain = input("คุณ " + _input_name + " มีอาการเจ็บคอหรือไม่ (y/n) : " )
+#     _input_has_mucus = input("คุณ " + _input_name + " มีอาการน้ำมูกไหลหรือไม่ (y/n) : ")
+#     _input_has_gasp = input("คุณ " + _input_name + " มีอาการเหนือ่ยหอบหรือไม่ (y/n) : ")
+
+def COVID_TRACKER_APP(UID, PROFILE_NAME, TEXT_FROM_USER, SESSION):
 
     current_date_data = {
         "has_fever": _input_has_fever,
@@ -31,7 +33,7 @@ while not input("Press x to Exit : ") == "x":
 
     result = analyze_covid_from_user(username=_input_name, current_date_data=current_date_data)
 
-    post(uid=_input_name, 
+    post_daily_tracking(uid=_input_name, 
         data=result, 
         firebase_app=firebase, 
         database_name=DB_NAME)
